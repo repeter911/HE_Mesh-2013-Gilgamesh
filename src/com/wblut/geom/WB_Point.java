@@ -1,7 +1,25 @@
 package com.wblut.geom;
 
-public class WB_Point {
+import java.util.Comparator;
+
+public class WB_Point implements Comparable {
 	protected double[] _coords;
+
+	public static WB_Point ZERO() {
+		return new WB_Point();
+	}
+
+	public static WB_Point X() {
+		return new WB_Point(1, 0, 0);
+	}
+
+	public static WB_Point Y() {
+		return new WB_Point(0, 1, 0);
+	}
+
+	public static WB_Point Z() {
+		return new WB_Point(0, 0, 1);
+	}
 
 	public WB_Point() {
 		_coords = new double[4];
@@ -277,6 +295,187 @@ public class WB_Point {
 
 	public double sqDistance2d(WB_Point p) {
 		return WB_Coord.sqDistance2d(_coords, p._coords);
+	}
+
+	public int compareTo(Object o) {
+		if (!(o instanceof com.wblut.geom.WB_Point)) {
+			throw new IllegalArgumentException(
+					"Can't compare a WB_Point to this object.");
+		}
+		WB_Point t = (WB_Point) o;
+
+		for (int i = 0; i < 3; i++) {
+			if (_coords[i] < t._coords[i]) {
+				return -1;
+			} else if (_coords[i] > t._coords[i]) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+	public static class WB_Comparator3d implements Comparator {
+
+		public static int compare(double a, double b) {
+			if (a < b)
+				return -1;
+			if (a > b)
+				return 1;
+
+			if (Double.isNaN(a)) {
+				if (Double.isNaN(b))
+					return 0;
+				return -1;
+			}
+
+			if (Double.isNaN(b))
+				return 1;
+			return 0;
+		}
+
+		private static final int XYZ = 0;
+		private static final int XZY = 1;
+		private static final int YXZ = 2;
+		private static final int YZX = 3;
+		private static final int ZXY = 4;
+		private static final int ZYX = 5;
+		private int I0, I1, I2;
+		private int mode;
+
+		public WB_Comparator3d() {
+			setMode(XYZ);
+		}
+
+		private void setMode(int m) {
+			mode = m;
+			setIndices();
+		}
+
+		private void setIndices() {
+			switch (mode) {
+			case XYZ:
+				I0 = 0;
+				I1 = 1;
+				I2 = 2;
+				break;
+			case XZY:
+				I0 = 0;
+				I1 = 2;
+				I2 = 1;
+				break;
+			case YXZ:
+				I0 = 1;
+				I1 = 0;
+				I2 = 2;
+				break;
+			case YZX:
+				I0 = 1;
+				I1 = 2;
+				I2 = 0;
+				break;
+			case ZXY:
+				I0 = 2;
+				I1 = 0;
+				I2 = 1;
+				break;
+			case ZYX:
+				I0 = 2;
+				I1 = 1;
+				I2 = 0;
+				break;
+			default:
+				I0 = 0;
+				I1 = 1;
+				I2 = 2;
+				break;
+
+			}
+
+		}
+
+		public WB_Comparator3d(int mode) {
+			setMode(mode);
+		}
+
+		public int compare(Object o1, Object o2) {
+			WB_Point c1 = (WB_Point) o1;
+			WB_Point c2 = (WB_Point) o2;
+			int compX = compare(c1._coords[I0], c2._coords[I0]);
+			if (compX != 0)
+				return compX;
+			int compY = compare(c1._coords[I1], c2._coords[I1]);
+			if (compY != 0)
+				return compY;
+			return compare(c1._coords[I2], c2._coords[I2]);
+
+		}
+	}
+
+	public static class WB_Comparator2d implements Comparator {
+
+		public static int compare(double a, double b) {
+			if (a < b)
+				return -1;
+			if (a > b)
+				return 1;
+
+			if (Double.isNaN(a)) {
+				if (Double.isNaN(b))
+					return 0;
+				return -1;
+			}
+
+			if (Double.isNaN(b))
+				return 1;
+			return 0;
+		}
+
+		private static final int XY = 0;
+		private static final int YX = 1;
+
+		private int I0, I1;
+		private int mode;
+
+		public WB_Comparator2d() {
+			setMode(XY);
+		}
+
+		private void setMode(int m) {
+			mode = m;
+			setIndices();
+		}
+
+		private void setIndices() {
+			switch (mode) {
+			case XY:
+				I0 = WB_Coord.X2d;
+				I1 = WB_Coord.Y2d;
+				break;
+			case YX:
+				I0 = WB_Coord.Y2d;
+				I1 = WB_Coord.X2d;
+				break;
+			default:
+				I0 = WB_Coord.X2d;
+				I1 = WB_Coord.Y2d;
+				break;
+			}
+
+		}
+
+		public WB_Comparator2d(int mode) {
+			setMode(mode);
+		}
+
+		public int compare(Object o1, Object o2) {
+			WB_Point c1 = (WB_Point) o1;
+			WB_Point c2 = (WB_Point) o2;
+			int compX = compare(c1._coords[I0], c2._coords[I0]);
+			if (compX != 0)
+				return compX;
+			return compare(c1._coords[I1], c2._coords[I1]);
+
+		}
 	}
 
 }

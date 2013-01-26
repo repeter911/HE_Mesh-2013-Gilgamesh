@@ -14,8 +14,8 @@ public class WB_Predicates {
 	public double circumradiusTetra(double[] p0, double[] p1, double[] p2,
 			double[] p3) {
 		double t1, t2, t3;
-		double[] circumcenter = new double[3];
-		_circumcenterTetra(p0, p1, p2, p3, circumcenter, null, null, null);
+		double[] circumcenter = circumcenterTetra(p0, p1, p2, p3, null, null,
+				null);
 		t1 = circumcenter[0] - p0[0];
 		t1 = t1 * t1;
 		t2 = circumcenter[1] - p0[1];
@@ -26,9 +26,9 @@ public class WB_Predicates {
 	}
 
 	public double circumradiusTri(double[] p0, double[] p1, double[] p2) {
-		double[] circumcenter = new double[3];
+
 		double t1, t2, t3;
-		_circumcenterTri(p0, p1, p2, circumcenter);
+		double[] circumcenter = circumcenterTri(p0, p1, p2);
 		t1 = circumcenter[0] - p0[0];
 		t1 = t1 * t1;
 		t2 = circumcenter[1] - p0[1];
@@ -3315,7 +3315,7 @@ public class WB_Predicates {
 		q[1] = q2;
 		q[2] = q3;
 
-		_circumcenterTri(a, b, c, circumcenter);
+		circumcenter = circumcenterTri(a, b, c);
 
 		t1 = circumcenter[0] - a[0];
 		t1 = t1 * t1;
@@ -4973,9 +4973,8 @@ public class WB_Predicates {
 		return Q;
 	}
 
-	private void _circumcenterTetra(double[] a, double[] b, double[] c,
-			double[] d, double[] circumcenter, double[] xi, double[] eta,
-			double[] zeta) {
+	public double[] circumcenterTetra(double[] a, double[] b, double[] c,
+			double[] d, double[] xi, double[] eta, double[] zeta) {
 		double xba, yba, zba, xca, yca, zca, xda, yda, zda;
 		double balength, calength, dalength;
 		double xcrosscd, ycrosscd, zcrosscd;
@@ -5020,6 +5019,7 @@ public class WB_Predicates {
 		zcirca = (balength * zcrosscd + calength * zcrossdb + dalength
 				* zcrossbc)
 				* denominator;
+		double[] circumcenter = new double[3];
 		circumcenter[0] = xcirca + a[0];
 		circumcenter[1] = ycirca + a[1];
 		circumcenter[2] = zcirca + a[2];
@@ -5033,10 +5033,10 @@ public class WB_Predicates {
 					* zcrossbc)
 					* (2.0 * denominator);
 		}
+		return circumcenter;
 	}
 
-	private void _circumcenterTri(double[] a, double[] b, double[] c,
-			double[] circumcenter) {
+	public double[] circumcenterTri(double[] a, double[] b, double[] c) {
 		double xba, yba, zba, xca, yca, zca;
 		double balength, calength;
 		double xcrossbc, ycrossbc, zcrossbc;
@@ -5072,18 +5072,20 @@ public class WB_Predicates {
 				* yca - calength * yba)
 				* xcrossbc)
 				* denominator;
+		double[] circumcenter = new double[3];
 		circumcenter[0] = xcirca + a[0];
 		circumcenter[1] = ycirca + a[1];
 		circumcenter[2] = zcirca + a[2];
+		return circumcenter;
 
 	}
 
 	public static void main(String[] args) {
 		WB_Predicates predicates = new WB_Predicates();
 		System.out.println(predicates.incircleTri(new double[] { 0,
-				1.000000000001 }, new double[] { 0, -1.000000000001 },
-				new double[] { 1.000000000001, 0 }, new double[] {
-						-1.000000000001, 0 }));
+				1.0000000000033 }, new double[] { 0, -1.0000000000033 },
+				new double[] { 1.0000000000033, 0 }, new double[] {
+						-1.0000000000033, 0 }));
 	}
 
 }

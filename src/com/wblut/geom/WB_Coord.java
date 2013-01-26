@@ -1,5 +1,7 @@
 package com.wblut.geom;
 
+import com.wblut.math.WB_M33;
+
 /**
  * 
  * Helper class to handle coord arrays
@@ -323,6 +325,32 @@ public class WB_Coord {
 	public static double sqDistance4d(double[] p, double[] q) {
 		return (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1])
 				+ (p[2] - q[2]) * (p[2] - q[2]) + (p[3] - q[3]) * (p[3] - q[3]);
+	}
+
+	public static double dot(double[] p, double[] q) {
+		return p[0] * q[0] + p[1] * q[1] + p[2] * q[2];
+	}
+
+	public static double dot2d(double[] p, double[] q) {
+		return p[X2d] * q[X2d] + p[Y2d] * q[Y2d];
+	}
+
+	public static double dot4d(double[] p, double[] q) {
+		return p[0] * q[0] + p[1] * q[1] + p[2] * q[2] + p[3] * q[3];
+	}
+
+	public static double[] cross(double[] p, double[] q) {
+		return new double[] { p[1] * q[2] - p[2] * q[1],
+				p[2] * q[0] - p[0] * q[2], p[0] * q[1] - p[1] * q[0] };
+	}
+
+	public static double[] perp(double[] p) {
+		return new double[] {};
+	}
+
+	public static WB_M33 tensor(double[] p, double[] q) {
+		return new WB_M33(p[0] * q[0], p[0] * q[1], p[0] * q[2], p[1] * q[0],
+				p[1] * q[1], p[1] * q[2], p[2] * q[0], p[2] * q[1], p[2] * q[2]);
 	}
 
 }

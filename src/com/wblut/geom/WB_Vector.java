@@ -1,6 +1,24 @@
 package com.wblut.geom;
 
+import com.wblut.math.WB_M33;
+
 public class WB_Vector extends WB_Point {
+
+	public static WB_Vector ZERO() {
+		return new WB_Vector();
+	}
+
+	public static WB_Vector X() {
+		return new WB_Vector(1, 0, 0);
+	}
+
+	public static WB_Vector Y() {
+		return new WB_Vector(0, 1, 0);
+	}
+
+	public static WB_Vector Z() {
+		return new WB_Vector(0, 0, 1);
+	}
 
 	public WB_Vector() {
 		_coords = new double[4];
@@ -270,4 +288,55 @@ public class WB_Vector extends WB_Point {
 		return div(d);
 	}
 
+	public double dot(WB_Point v) {
+		return WB_Coord.dot(_coords, v._coords);
+	}
+
+	public double dot2d(WB_Point v) {
+		return WB_Coord.dot2d(_coords, v._coords);
+	}
+
+	public WB_Vector cross(WB_Point v) {
+		return vectorFromArray(WB_Coord.cross(_coords, v._coords));
+	}
+
+	public WB_Vector crossSelf(WB_Point v) {
+		WB_Coord.cross(_coords, v._coords);
+		_coords[3] = 0;
+		return this;
+	}
+
+	public int compareTo(Object o) {
+		if (!(o instanceof com.wblut.geom.WB_Vector)) {
+			throw new IllegalArgumentException(
+					"Can't compare a WB_Vector to this object.");
+		}
+		WB_Vector t = (WB_Vector) o;
+
+		for (int i = 0; i < 3; i++) {
+			if (_coords[i] < t._coords[i]) {
+				return -1;
+			} else if (_coords[i] > t._coords[i]) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+	public void rotate(final double angle, final double x, final double y,
+			final double z) {
+		final WB_Transform raa = new WB_Transform();
+		raa.addRotate(angle, new WB_Vector(x, y, z));
+		raa.applySelfAsVector(this);
+	}
+
+	public void rotate(final double angle, final WB_Vector a) {
+		final WB_Transform raa = new WB_Transform();
+		raa.addRotate(angle, a);
+		raa.applySelfAsVector(this);
+	}
+
+	public WB_M33 tensor(WB_Point v) {
+		return WB_Coord.tensor(_coords, v._coords);
+	}
 }
