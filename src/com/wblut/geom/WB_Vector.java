@@ -1,29 +1,28 @@
 package com.wblut.geom;
 
-public class WB_Point {
-	protected double[] _coords;
+public class WB_Vector extends WB_Point {
 
-	public WB_Point() {
+	public WB_Vector() {
 		_coords = new double[4];
-		_coords[3] = 1;
+		_coords[3] = 0;
 	}
 
-	public WB_Point(double x, double y) {
+	public WB_Vector(double x, double y) {
 		_coords = new double[4];
 		set(x, y);
 	}
 
-	public WB_Point(double x, double y, double z) {
+	public WB_Vector(double x, double y, double z) {
 		_coords = new double[4];
 		set(x, y, z);
 	}
 
-	public WB_Point(double[] v) {
+	public WB_Vector(double[] v) {
 		_coords = new double[4];
 		set(v);
 	}
 
-	public WB_Point(WB_Point p) {
+	public WB_Vector(WB_Vector p) {
 		_coords = new double[4];
 		set(p);
 	}
@@ -31,24 +30,25 @@ public class WB_Point {
 	public void set(double x, double y) {
 		set2d(0, x);
 		set2d(1, y);
-		_coords[3] = 1;
+		_coords[3] = 0;
 	}
 
 	public void set(double x, double y, double z) {
 		_coords[0] = x;
 		_coords[1] = y;
 		_coords[2] = z;
-		_coords[3] = 1;
+		_coords[3] = 0;
+
 	}
 
 	public void set(double[] v) {
 		for (int i = 0; i < v.length; i++) {
 			_coords[i] = v[i];
 		}
-		_coords[3] = 1;
+		_coords[3] = 0;
 	}
 
-	public void set(WB_Point p) {
+	public void set(WB_Vector p) {
 		set(p._coords);
 	}
 
@@ -56,8 +56,8 @@ public class WB_Point {
 		_coords[i] = v;
 	}
 
-	public WB_Point get() {
-		return new WB_Point(this);
+	public WB_Vector get() {
+		return new WB_Vector(this);
 	}
 
 	public double get(int i) {
@@ -166,84 +166,80 @@ public class WB_Point {
 		return new double[] { _coords[0], _coords[1], _coords[2], _coords[3] };
 	}
 
-	private static WB_Point pointFromArray(double[] coords) {
-		WB_Point result = new WB_Point();
+	protected static WB_Vector vectorFromArray(double[] coords) {
+		WB_Vector result = new WB_Vector();
 		result._coords = coords;
-		result._coords[3] = 1;
+		result._coords[3] = 0;
 		return result;
 	}
 
-	public WB_Point add(WB_Point p) {
-		return pointFromArray(WB_Coord.add(_coords, p._coords));
+	public WB_Vector add(WB_Point p) {
+		return vectorFromArray(WB_Coord.add(_coords, p._coords));
 	}
 
-	public WB_Point addSelf(WB_Point p) {
+	public WB_Vector addSelf(WB_Point p) {
 		WB_Coord.addSelf(_coords, p._coords);
-		_coords[3] = 1;
+		_coords[3] = 0;
 		return this;
 	}
 
-	public WB_Point add(double f, WB_Point p) {
-		return pointFromArray(WB_Coord.add(_coords, f, p._coords));
+	public WB_Vector add(double f, WB_Point p) {
+		return vectorFromArray(WB_Coord.add(_coords, f, p._coords));
 	}
 
-	public WB_Point addSelf(double f, WB_Point p) {
+	public WB_Vector addSelf(double f, WB_Point p) {
 		WB_Coord.addSelf(_coords, f, p._coords);
-		_coords[3] = 1;
+		_coords[3] = 0;
 		return this;
 	}
 
-	public WB_Point add(double f, double g, WB_Point p) {
-		return pointFromArray(WB_Coord.add(f, _coords, g, p._coords));
+	public WB_Vector add(double f, double g, WB_Point p) {
+		return vectorFromArray(WB_Coord.add(f, _coords, g, p._coords));
 	}
 
-	public WB_Point addSelf(double f, double g, WB_Point p) {
+	public WB_Vector addSelf(double f, double g, WB_Point p) {
 		WB_Coord.addSelf(f, _coords, f, p._coords);
-		_coords[3] = 1;
+		_coords[3] = 0;
 		return this;
 	}
 
-	public WB_Point sub(WB_Point p) {
-		return pointFromArray(WB_Coord.sub(_coords, p._coords));
+	public WB_Vector sub(WB_Point p) {
+		return vectorFromArray(WB_Coord.sub(_coords, p._coords));
 	}
 
-	public WB_Vector subToVector(WB_Point p) {
-		return WB_Vector.vectorFromArray(WB_Coord.sub(_coords, p._coords));
-	}
-
-	public WB_Point subSelf(WB_Point p) {
+	public WB_Vector subSelf(WB_Point p) {
 		WB_Coord.subSelf(_coords, p._coords);
-		_coords[3] = 1;
+		_coords[3] = 0;
 		return this;
 	}
 
-	public WB_Point mul(double f) {
-		return pointFromArray(WB_Coord.mul(_coords, f));
+	public WB_Vector mul(double f) {
+		return vectorFromArray(WB_Coord.mul(_coords, f));
 	}
 
-	public WB_Point mulSelf(double f) {
+	public WB_Vector mulSelf(double f) {
 		WB_Coord.mulSelf(_coords, f);
-		_coords[3] = 1;
+		_coords[3] = 0;
 		return this;
 	}
 
-	public WB_Point div(double f) {
-		return pointFromArray(WB_Coord.div(_coords, f));
+	public WB_Vector div(double f) {
+		return vectorFromArray(WB_Coord.div(_coords, f));
 	}
 
-	public WB_Point divSelf(double f) {
+	public WB_Vector divSelf(double f) {
 		WB_Coord.divSelf(_coords, f);
-		_coords[3] = 1;
+		_coords[3] = 0;
 		return this;
 	}
 
-	public WB_Point scale(double[] f) {
-		return pointFromArray(WB_Coord.scale(_coords, f));
+	public WB_Vector scale(double[] f) {
+		return vectorFromArray(WB_Coord.scale(_coords, f));
 	}
 
-	public WB_Point scaleSelf(double[] f) {
+	public WB_Vector scaleSelf(double[] f) {
 		WB_Coord.scaleSelf(_coords, f);
-		_coords[3] = 1;
+		_coords[3] = 0;
 		return this;
 	}
 
@@ -263,20 +259,15 @@ public class WB_Point {
 		return WB_Coord.sqLength2d(_coords);
 	}
 
-	public double distance(WB_Point p) {
-		return WB_Coord.distance(_coords, p._coords);
+	public double normalize() {
+		double d = length();
+		divSelf(d);
+		return d;
 	}
 
-	public double sqDistance(WB_Point p) {
-		return WB_Coord.sqDistance(_coords, p._coords);
-	}
-
-	public double distance2d(WB_Point p) {
-		return WB_Coord.distance2d(_coords, p._coords);
-	}
-
-	public double sqDistance2d(WB_Point p) {
-		return WB_Coord.sqDistance2d(_coords, p._coords);
+	public WB_Vector norm() {
+		double d = length();
+		return div(d);
 	}
 
 }

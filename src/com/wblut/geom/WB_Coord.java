@@ -9,9 +9,9 @@ public class WB_Coord {
 	private static final int X = 0;
 	private static final int Y = 1;
 	private static final int Z = 2;
-	private static final int XY = 0;
-	private static final int YZ = 1;
-	private static final int XZ = 2;
+	private static final int XY = 2;
+	private static final int YZ = 0;
+	private static final int XZ = 1;
 	private static int mode2d = XY;
 	protected static int X2d = X;
 	protected static int Y2d = Y;
@@ -264,6 +264,65 @@ public class WB_Coord {
 		p[1] *= q[1];
 		p[2] *= q[2];
 		p[3] *= q[3];
+	}
+
+	public static int largestOrdinate(double[] p) {
+		if ((p[2] > p[0]) && (p[2] > p[1]))
+			return 2;
+		if ((p[1] > p[0]) && (p[1] > p[2]))
+			return 1;
+		return 0;
+	}
+
+	public static double length(double[] v) {
+		return Math.sqrt(sqLength(v));
+	}
+
+	public static double sqLength(double[] v) {
+		return v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	}
+
+	public static double length2d(double[] v) {
+		return Math.sqrt(sqLength2d(v));
+	}
+
+	public static double sqLength2d(double[] v) {
+		return v[X2d] * v[X2d] + v[Y2d] * v[Y2d];
+	}
+
+	public static double length4d(double[] v) {
+		return Math.sqrt(sqLength4d(v));
+	}
+
+	public static double sqLength4d(double[] v) {
+		return v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+	}
+
+	public static double distance(double[] p, double[] q) {
+		return Math.sqrt(sqDistance(p, q));
+	}
+
+	public static double sqDistance(double[] p, double[] q) {
+		return (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1])
+				+ (p[2] - q[2]) * (p[2] - q[2]);
+	}
+
+	public static double distance2d(double[] p, double[] q) {
+		return Math.sqrt(sqDistance2d(p, q));
+	}
+
+	public static double sqDistance2d(double[] p, double[] q) {
+		return (p[X2d] - q[X2d]) * (p[X2d] - q[X2d]) + (p[Y2d] - q[Y2d])
+				* (p[Y2d] - q[Y2d]);
+	}
+
+	public static double distance4d(double[] p, double[] q) {
+		return Math.sqrt(sqDistance4d(p, q));
+	}
+
+	public static double sqDistance4d(double[] p, double[] q) {
+		return (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1])
+				+ (p[2] - q[2]) * (p[2] - q[2]) + (p[3] - q[3]) * (p[3] - q[3]);
 	}
 
 }
