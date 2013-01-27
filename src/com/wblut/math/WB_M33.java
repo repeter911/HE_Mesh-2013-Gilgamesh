@@ -1,7 +1,6 @@
 
 package com.wblut.math;
 
-import com.wblut.WB_Epsilon;
 
 
 /**

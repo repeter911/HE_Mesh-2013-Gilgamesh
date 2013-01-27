@@ -1,7 +1,6 @@
 
 package com.wblut.math;
 
-import com.wblut.WB_Epsilon;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -337,7 +336,7 @@ public class WB_M44 {
 	 *            factor
 	 */
 	public void div(final double f) {
-		final double invf = (com.wblut.WB_Epsilon.isZero(f)) ? 0 : 1.0 / f;
+		final double invf = (com.wblut.math.WB_Epsilon.isZero(f)) ? 0 : 1.0 / f;
 		m11 *= invf;
 		m12 *= invf;
 		m13 *= invf;

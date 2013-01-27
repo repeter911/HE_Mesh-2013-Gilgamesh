@@ -1,7 +1,6 @@
 
-package com.wblut;
+package com.wblut.math;
 
-import com.wblut.math.WB_Fast;
 
 /**
  * WB_Epsilon contains functions for tolerance based floating point

@@ -3,7 +3,7 @@ package com.wblut.geom;
 import java.util.Comparator;
 
 public class WB_Point implements Comparable {
-	protected double[] _coords;
+	public double[] coords;
 
 	public static WB_Point ZERO() {
 		return new WB_Point();
@@ -22,56 +22,56 @@ public class WB_Point implements Comparable {
 	}
 
 	public WB_Point() {
-		_coords = new double[4];
-		_coords[3] = 1;
+		coords = new double[3];
+
 	}
 
 	public WB_Point(double x, double y) {
-		_coords = new double[4];
+		coords = new double[3];
 		set(x, y);
 	}
 
 	public WB_Point(double x, double y, double z) {
-		_coords = new double[4];
+		coords = new double[3];
 		set(x, y, z);
 	}
 
 	public WB_Point(double[] v) {
-		_coords = new double[4];
+		coords = new double[3];
 		set(v);
 	}
 
 	public WB_Point(WB_Point p) {
-		_coords = new double[4];
+		coords = new double[3];
 		set(p);
 	}
 
 	public void set(double x, double y) {
 		set2d(0, x);
 		set2d(1, y);
-		_coords[3] = 1;
+
 	}
 
 	public void set(double x, double y, double z) {
-		_coords[0] = x;
-		_coords[1] = y;
-		_coords[2] = z;
-		_coords[3] = 1;
+		coords[0] = x;
+		coords[1] = y;
+		coords[2] = z;
+
 	}
 
 	public void set(double[] v) {
 		for (int i = 0; i < v.length; i++) {
-			_coords[i] = v[i];
+			coords[i] = v[i];
 		}
-		_coords[3] = 1;
+
 	}
 
 	public void set(WB_Point p) {
-		set(p._coords);
+		set(p.coords);
 	}
 
 	public void set(int i, double v) {
-		_coords[i] = v;
+		coords[i] = v;
 	}
 
 	public WB_Point get() {
@@ -79,222 +79,204 @@ public class WB_Point implements Comparable {
 	}
 
 	public double get(int i) {
-		return _coords[i];
+		return coords[i];
 	}
 
 	public double x() {
-		return _coords[0];
+		return coords[0];
 	}
 
 	public double y() {
-		return _coords[1];
+		return coords[1];
 	}
 
 	public double z() {
-		return _coords[2];
-	}
-
-	public double w() {
-		return _coords[3];
+		return coords[2];
 	}
 
 	public float xf() {
-		return (float) _coords[0];
+		return (float) coords[0];
 	}
 
 	public float yf() {
-		return (float) _coords[1];
+		return (float) coords[1];
 	}
 
 	public float zf() {
-		return (float) _coords[2];
-	}
-
-	public float wf() {
-		return (float) _coords[3];
+		return (float) coords[2];
 	}
 
 	public int xi() {
-		return (int) _coords[0];
+		return (int) coords[0];
 	}
 
 	public int yi() {
-		return (int) _coords[1];
+		return (int) coords[1];
 	}
 
 	public int zi() {
-		return (int) _coords[2];
-	}
-
-	public int wi() {
-		return (int) _coords[3];
+		return (int) coords[2];
 	}
 
 	public void set2d(int i, double v) {
 		if (i == 0) {
-			_coords[WB_Coord.X2d] = v;
+			coords[WB_Coord.X2d] = v;
 		} else if (i == 1) {
-			_coords[WB_Coord.Y2d] = v;
+			coords[WB_Coord.Y2d] = v;
 		}
 	}
 
 	public double get2d(int i) {
 		if (i == 0) {
-			return _coords[WB_Coord.X2d];
+			return coords[WB_Coord.X2d];
 		} else if (i == 1) {
-			return _coords[WB_Coord.Y2d];
+			return coords[WB_Coord.Y2d];
 		} else {
 			return Double.NaN;
 		}
 	}
 
 	public double x2d() {
-		return _coords[WB_Coord.X2d];
+		return coords[WB_Coord.X2d];
 	}
 
 	public double y2d() {
-		return _coords[WB_Coord.Y2d];
+		return coords[WB_Coord.Y2d];
 	}
 
 	public float xf2d() {
-		return (float) _coords[WB_Coord.X2d];
+		return (float) coords[WB_Coord.X2d];
 	}
 
 	public float yf2d() {
-		return (float) _coords[WB_Coord.Y2d];
+		return (float) coords[WB_Coord.Y2d];
 	}
 
 	public int xi2d() {
-		return (int) _coords[WB_Coord.X2d];
+		return (int) coords[WB_Coord.X2d];
 	}
 
 	public int yi2d() {
-		return (int) _coords[WB_Coord.Y2d];
+		return (int) coords[WB_Coord.Y2d];
 	}
 
 	public double[] toArray2d() {
-		return new double[] { _coords[WB_Coord.X2d], _coords[WB_Coord.Y2d] };
+		return new double[] { coords[WB_Coord.X2d], coords[WB_Coord.Y2d] };
 	}
 
-	public double[] toArray3d() {
-		return new double[] { _coords[0], _coords[1], _coords[2] };
-	}
-
-	public double[] toArray4d() {
-		return new double[] { _coords[0], _coords[1], _coords[2], _coords[3] };
+	public double[] toArray() {
+		return new double[] { coords[0], coords[1], coords[2] };
 	}
 
 	private static WB_Point pointFromArray(double[] coords) {
 		WB_Point result = new WB_Point();
-		result._coords = coords;
-		result._coords[3] = 1;
+		result.coords = coords;
 		return result;
 	}
 
 	public WB_Point add(WB_Point p) {
-		return pointFromArray(WB_Coord.add(_coords, p._coords));
+		return pointFromArray(WB_Coord.add(coords, p.coords));
 	}
 
 	public WB_Point addSelf(WB_Point p) {
-		WB_Coord.addSelf(_coords, p._coords);
-		_coords[3] = 1;
+		WB_Coord.addSelf(coords, p.coords);
+
 		return this;
 	}
 
 	public WB_Point add(double f, WB_Point p) {
-		return pointFromArray(WB_Coord.add(_coords, f, p._coords));
+		return pointFromArray(WB_Coord.add(coords, f, p.coords));
 	}
 
 	public WB_Point addSelf(double f, WB_Point p) {
-		WB_Coord.addSelf(_coords, f, p._coords);
-		_coords[3] = 1;
+		WB_Coord.addSelf(coords, f, p.coords);
+
 		return this;
 	}
 
 	public WB_Point add(double f, double g, WB_Point p) {
-		return pointFromArray(WB_Coord.add(f, _coords, g, p._coords));
+		return pointFromArray(WB_Coord.add(f, coords, g, p.coords));
 	}
 
 	public WB_Point addSelf(double f, double g, WB_Point p) {
-		WB_Coord.addSelf(f, _coords, f, p._coords);
-		_coords[3] = 1;
+		WB_Coord.addSelf(f, coords, f, p.coords);
+
 		return this;
 	}
 
 	public WB_Point sub(WB_Point p) {
-		return pointFromArray(WB_Coord.sub(_coords, p._coords));
+		return pointFromArray(WB_Coord.sub(coords, p.coords));
 	}
 
 	public WB_Vector subToVector(WB_Point p) {
-		return WB_Vector.vectorFromArray(WB_Coord.sub(_coords, p._coords));
+		return WB_Vector.vectorFromArray(WB_Coord.sub(coords, p.coords));
 	}
 
 	public WB_Point subSelf(WB_Point p) {
-		WB_Coord.subSelf(_coords, p._coords);
-		_coords[3] = 1;
+		WB_Coord.subSelf(coords, p.coords);
+
 		return this;
 	}
 
 	public WB_Point mul(double f) {
-		return pointFromArray(WB_Coord.mul(_coords, f));
+		return pointFromArray(WB_Coord.mul(coords, f));
 	}
 
 	public WB_Point mulSelf(double f) {
-		WB_Coord.mulSelf(_coords, f);
-		_coords[3] = 1;
+		WB_Coord.mulSelf(coords, f);
+
 		return this;
 	}
 
 	public WB_Point div(double f) {
-		return pointFromArray(WB_Coord.div(_coords, f));
+		return pointFromArray(WB_Coord.div(coords, f));
 	}
 
 	public WB_Point divSelf(double f) {
-		WB_Coord.divSelf(_coords, f);
-		_coords[3] = 1;
+		WB_Coord.divSelf(coords, f);
+
 		return this;
 	}
 
 	public WB_Point scale(double[] f) {
-		return pointFromArray(WB_Coord.scale(_coords, f));
+		return pointFromArray(WB_Coord.scale(coords, f));
 	}
 
 	public WB_Point scaleSelf(double[] f) {
-		WB_Coord.scaleSelf(_coords, f);
-		_coords[3] = 1;
+		WB_Coord.scaleSelf(coords, f);
 		return this;
 	}
 
 	public double length() {
-		return WB_Coord.length(_coords);
+		return WB_Coord.length(coords);
 	}
 
 	public double sqLength() {
-		return WB_Coord.sqLength(_coords);
+		return WB_Coord.sqLength(coords);
 	}
 
 	public double length2d() {
-		return WB_Coord.length2d(_coords);
+		return WB_Coord.length2d(coords);
 	}
 
 	public double sqLength2d() {
-		return WB_Coord.sqLength2d(_coords);
+		return WB_Coord.sqLength2d(coords);
 	}
 
 	public double distance(WB_Point p) {
-		return WB_Coord.distance(_coords, p._coords);
+		return WB_Coord.distance(coords, p.coords);
 	}
 
 	public double sqDistance(WB_Point p) {
-		return WB_Coord.sqDistance(_coords, p._coords);
+		return WB_Coord.sqDistance(coords, p.coords);
 	}
 
 	public double distance2d(WB_Point p) {
-		return WB_Coord.distance2d(_coords, p._coords);
+		return WB_Coord.distance2d(coords, p.coords);
 	}
 
 	public double sqDistance2d(WB_Point p) {
-		return WB_Coord.sqDistance2d(_coords, p._coords);
+		return WB_Coord.sqDistance2d(coords, p.coords);
 	}
 
 	public int compareTo(Object o) {
@@ -305,16 +287,52 @@ public class WB_Point implements Comparable {
 		WB_Point t = (WB_Point) o;
 
 		for (int i = 0; i < 3; i++) {
-			if (_coords[i] < t._coords[i]) {
+			if (coords[i] < t.coords[i]) {
 				return -1;
-			} else if (_coords[i] > t._coords[i]) {
+			} else if (coords[i] > t.coords[i]) {
 				return 1;
 			}
 		}
 		return 0;
 	}
 
-	public static class WB_Comparator3d implements Comparator {
+	public void rotateAboutOrigin(final double angle, final double x,
+			final double y, final double z) {
+		final WB_Transform raa = new WB_Transform();
+		raa.addRotate(angle, new WB_Vector(x, y, z));
+		raa.applySelfAsPoint(this);
+	}
+
+	public void rotateAboutOrigin(final double angle, final WB_Vector a) {
+		final WB_Transform raa = new WB_Transform();
+		raa.addRotate(angle, a);
+		raa.applySelfAsPoint(this);
+	}
+
+	public void rotateAboutAxis(final double angle, final double ox,
+			final double oy, final double oz, final double ax, final double ay,
+			final double az) {
+		final WB_Transform raa = new WB_Transform();
+		raa.addRotateAboutAxis(angle, new WB_Point(ox, oy, oz), new WB_Vector(
+				ax, ay, az));
+		raa.applySelfAsPoint(this);
+	}
+
+	public void rotateAboutAxis(final double angle, final WB_Point p,
+			final WB_Vector a) {
+		final WB_Transform raa = new WB_Transform();
+		raa.addRotateAboutAxis(angle, p, a);
+		raa.applySelfAsPoint(this);
+	}
+
+	public void rotateAboutAxis(final double angle, final WB_Point p1,
+			final WB_Point p2) {
+		final WB_Transform raa = new WB_Transform();
+		raa.addRotateAboutAxis(angle, p1, p2.subToVector(p1));
+		raa.applySelfAsPoint(this);
+	}
+
+	public static class WB_Comparator3d implements Comparator<WB_Point> {
 
 		public static int compare(double a, double b) {
 			if (a < b)
@@ -333,12 +351,12 @@ public class WB_Point implements Comparable {
 			return 0;
 		}
 
-		private static final int XYZ = 0;
-		private static final int XZY = 1;
-		private static final int YXZ = 2;
-		private static final int YZX = 3;
-		private static final int ZXY = 4;
-		private static final int ZYX = 5;
+		public static final int XYZ = 0;
+		public static final int XZY = 1;
+		public static final int YXZ = 2;
+		public static final int YZX = 3;
+		public static final int ZXY = 4;
+		public static final int ZYX = 5;
 		private int I0, I1, I2;
 		private int mode;
 
@@ -397,21 +415,19 @@ public class WB_Point implements Comparable {
 			setMode(mode);
 		}
 
-		public int compare(Object o1, Object o2) {
-			WB_Point c1 = (WB_Point) o1;
-			WB_Point c2 = (WB_Point) o2;
-			int compX = compare(c1._coords[I0], c2._coords[I0]);
+		public int compare(WB_Point c1, WB_Point c2) {
+			int compX = compare(c1.coords[I0], c2.coords[I0]);
 			if (compX != 0)
 				return compX;
-			int compY = compare(c1._coords[I1], c2._coords[I1]);
+			int compY = compare(c1.coords[I1], c2.coords[I1]);
 			if (compY != 0)
 				return compY;
-			return compare(c1._coords[I2], c2._coords[I2]);
+			return compare(c1.coords[I2], c2.coords[I2]);
 
 		}
 	}
 
-	public static class WB_Comparator2d implements Comparator {
+	public static class WB_Comparator2d implements Comparator<WB_Point> {
 
 		public static int compare(double a, double b) {
 			if (a < b)
@@ -430,8 +446,8 @@ public class WB_Point implements Comparable {
 			return 0;
 		}
 
-		private static final int XY = 0;
-		private static final int YX = 1;
+		public static final int XY = 0;
+		public static final int YX = 1;
 
 		private int I0, I1;
 		private int mode;
@@ -467,13 +483,11 @@ public class WB_Point implements Comparable {
 			setMode(mode);
 		}
 
-		public int compare(Object o1, Object o2) {
-			WB_Point c1 = (WB_Point) o1;
-			WB_Point c2 = (WB_Point) o2;
-			int compX = compare(c1._coords[I0], c2._coords[I0]);
+		public int compare(WB_Point c1, WB_Point c2) {
+			int compX = compare(c1.coords[I0], c2.coords[I0]);
 			if (compX != 0)
 				return compX;
-			return compare(c1._coords[I1], c2._coords[I1]);
+			return compare(c1.coords[I1], c2.coords[I1]);
 
 		}
 	}

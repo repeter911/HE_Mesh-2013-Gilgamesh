@@ -4738,14 +4738,20 @@ public class WB_Predicates {
 		double a, b;
 		a = orientTetra(p0, p1, p2, q0);
 		b = orientTetra(p0, p1, p2, q1);
-		if (a == 0 || b == 0) {
+		if (a == 0 && b == 0) {
 			return WB_Classify.COPLANAR;
 		}
 		if ((a > 0 && b < 0) || (a < 0 && b > 0)) {
-			return WB_Classify.DIFF;
+			if (a == 0 || b == 0) {
+				return WB_Classify.DIFF;
+			}
+			return WB_Classify.DIFFEXCL;
 		}
 		if ((a > 0 && b > 0) || (a < 0 && b < 0)) {
-			return WB_Classify.SAME;
+			if (a == 0 || b == 0) {
+				return WB_Classify.SAME;
+			}
+			return WB_Classify.SAMEEXCL;
 		}
 
 		return null;

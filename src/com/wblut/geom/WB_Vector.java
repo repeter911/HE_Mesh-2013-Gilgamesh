@@ -21,288 +21,139 @@ public class WB_Vector extends WB_Point {
 	}
 
 	public WB_Vector() {
-		_coords = new double[4];
-		_coords[3] = 0;
+		super();
 	}
 
 	public WB_Vector(double x, double y) {
-		_coords = new double[4];
-		set(x, y);
+		super(x, y);
 	}
 
 	public WB_Vector(double x, double y, double z) {
-		_coords = new double[4];
-		set(x, y, z);
+		super(x, y, z);
 	}
 
 	public WB_Vector(double[] v) {
-		_coords = new double[4];
-		set(v);
+
+		super(v);
 	}
 
-	public WB_Vector(WB_Vector p) {
-		_coords = new double[4];
-		set(p);
-	}
-
-	public void set(double x, double y) {
-		set2d(0, x);
-		set2d(1, y);
-		_coords[3] = 0;
-	}
-
-	public void set(double x, double y, double z) {
-		_coords[0] = x;
-		_coords[1] = y;
-		_coords[2] = z;
-		_coords[3] = 0;
-
-	}
-
-	public void set(double[] v) {
-		for (int i = 0; i < v.length; i++) {
-			_coords[i] = v[i];
-		}
-		_coords[3] = 0;
-	}
-
-	public void set(WB_Vector p) {
-		set(p._coords);
-	}
-
-	public void set(int i, double v) {
-		_coords[i] = v;
+	public WB_Vector(WB_Point p) {
+		super(p);
 	}
 
 	public WB_Vector get() {
 		return new WB_Vector(this);
 	}
 
-	public double get(int i) {
-		return _coords[i];
-	}
-
-	public double x() {
-		return _coords[0];
-	}
-
-	public double y() {
-		return _coords[1];
-	}
-
-	public double z() {
-		return _coords[2];
-	}
-
-	public double w() {
-		return _coords[3];
-	}
-
-	public float xf() {
-		return (float) _coords[0];
-	}
-
-	public float yf() {
-		return (float) _coords[1];
-	}
-
-	public float zf() {
-		return (float) _coords[2];
-	}
-
-	public float wf() {
-		return (float) _coords[3];
-	}
-
-	public int xi() {
-		return (int) _coords[0];
-	}
-
-	public int yi() {
-		return (int) _coords[1];
-	}
-
-	public int zi() {
-		return (int) _coords[2];
-	}
-
-	public int wi() {
-		return (int) _coords[3];
-	}
-
-	public void set2d(int i, double v) {
-		if (i == 0) {
-			_coords[WB_Coord.X2d] = v;
-		} else if (i == 1) {
-			_coords[WB_Coord.Y2d] = v;
-		}
-	}
-
-	public double get2d(int i) {
-		if (i == 0) {
-			return _coords[WB_Coord.X2d];
-		} else if (i == 1) {
-			return _coords[WB_Coord.Y2d];
-		} else {
-			return Double.NaN;
-		}
-	}
-
-	public double x2d() {
-		return _coords[WB_Coord.X2d];
-	}
-
-	public double y2d() {
-		return _coords[WB_Coord.Y2d];
-	}
-
-	public float xf2d() {
-		return (float) _coords[WB_Coord.X2d];
-	}
-
-	public float yf2d() {
-		return (float) _coords[WB_Coord.Y2d];
-	}
-
-	public int xi2d() {
-		return (int) _coords[WB_Coord.X2d];
-	}
-
-	public int yi2d() {
-		return (int) _coords[WB_Coord.Y2d];
-	}
-
-	public double[] toArray2d() {
-		return new double[] { _coords[WB_Coord.X2d], _coords[WB_Coord.Y2d] };
-	}
-
-	public double[] toArray3d() {
-		return new double[] { _coords[0], _coords[1], _coords[2] };
-	}
-
-	public double[] toArray4d() {
-		return new double[] { _coords[0], _coords[1], _coords[2], _coords[3] };
-	}
-
 	protected static WB_Vector vectorFromArray(double[] coords) {
 		WB_Vector result = new WB_Vector();
-		result._coords = coords;
-		result._coords[3] = 0;
+		result.coords = coords;
 		return result;
 	}
 
 	public WB_Vector add(WB_Point p) {
-		return vectorFromArray(WB_Coord.add(_coords, p._coords));
+		return vectorFromArray(WB_Coord.add(coords, p.coords));
 	}
 
 	public WB_Vector addSelf(WB_Point p) {
-		WB_Coord.addSelf(_coords, p._coords);
-		_coords[3] = 0;
+		WB_Coord.addSelf(coords, p.coords);
 		return this;
 	}
 
 	public WB_Vector add(double f, WB_Point p) {
-		return vectorFromArray(WB_Coord.add(_coords, f, p._coords));
+		return vectorFromArray(WB_Coord.add(coords, f, p.coords));
 	}
 
 	public WB_Vector addSelf(double f, WB_Point p) {
-		WB_Coord.addSelf(_coords, f, p._coords);
-		_coords[3] = 0;
+		WB_Coord.addSelf(coords, f, p.coords);
 		return this;
 	}
 
 	public WB_Vector add(double f, double g, WB_Point p) {
-		return vectorFromArray(WB_Coord.add(f, _coords, g, p._coords));
+		return vectorFromArray(WB_Coord.add(f, coords, g, p.coords));
 	}
 
 	public WB_Vector addSelf(double f, double g, WB_Point p) {
-		WB_Coord.addSelf(f, _coords, f, p._coords);
-		_coords[3] = 0;
+		WB_Coord.addSelf(f, coords, f, p.coords);
 		return this;
 	}
 
 	public WB_Vector sub(WB_Point p) {
-		return vectorFromArray(WB_Coord.sub(_coords, p._coords));
+		return vectorFromArray(WB_Coord.sub(coords, p.coords));
 	}
 
 	public WB_Vector subSelf(WB_Point p) {
-		WB_Coord.subSelf(_coords, p._coords);
-		_coords[3] = 0;
+		WB_Coord.subSelf(coords, p.coords);
 		return this;
 	}
 
 	public WB_Vector mul(double f) {
-		return vectorFromArray(WB_Coord.mul(_coords, f));
+		return vectorFromArray(WB_Coord.mul(coords, f));
 	}
 
 	public WB_Vector mulSelf(double f) {
-		WB_Coord.mulSelf(_coords, f);
-		_coords[3] = 0;
+		WB_Coord.mulSelf(coords, f);
 		return this;
 	}
 
 	public WB_Vector div(double f) {
-		return vectorFromArray(WB_Coord.div(_coords, f));
+		return vectorFromArray(WB_Coord.div(coords, f));
 	}
 
 	public WB_Vector divSelf(double f) {
-		WB_Coord.divSelf(_coords, f);
-		_coords[3] = 0;
+		WB_Coord.divSelf(coords, f);
 		return this;
 	}
 
 	public WB_Vector scale(double[] f) {
-		return vectorFromArray(WB_Coord.scale(_coords, f));
+		return vectorFromArray(WB_Coord.scale(coords, f));
 	}
 
 	public WB_Vector scaleSelf(double[] f) {
-		WB_Coord.scaleSelf(_coords, f);
-		_coords[3] = 0;
+		WB_Coord.scaleSelf(coords, f);
 		return this;
 	}
 
 	public double length() {
-		return WB_Coord.length(_coords);
+		return WB_Coord.length(coords);
 	}
 
 	public double sqLength() {
-		return WB_Coord.sqLength(_coords);
+		return WB_Coord.sqLength(coords);
 	}
 
 	public double length2d() {
-		return WB_Coord.length2d(_coords);
+		return WB_Coord.length2d(coords);
 	}
 
 	public double sqLength2d() {
-		return WB_Coord.sqLength2d(_coords);
+		return WB_Coord.sqLength2d(coords);
 	}
 
-	public double normalize() {
+	public WB_Vector normalize() {
 		double d = length();
-		divSelf(d);
-		return d;
+		return divSelf(d);
 	}
 
-	public WB_Vector norm() {
+	public WB_Vector getUnitVector() {
 		double d = length();
 		return div(d);
 	}
 
 	public double dot(WB_Point v) {
-		return WB_Coord.dot(_coords, v._coords);
+		return WB_Coord.dot(coords, v.coords);
 	}
 
 	public double dot2d(WB_Point v) {
-		return WB_Coord.dot2d(_coords, v._coords);
+		return WB_Coord.dot2d(coords, v.coords);
 	}
 
 	public WB_Vector cross(WB_Point v) {
-		return vectorFromArray(WB_Coord.cross(_coords, v._coords));
+		return vectorFromArray(WB_Coord.cross(coords, v.coords));
 	}
 
 	public WB_Vector crossSelf(WB_Point v) {
-		WB_Coord.cross(_coords, v._coords);
-		_coords[3] = 0;
+		WB_Coord.cross(coords, v.coords);
 		return this;
 	}
 
@@ -314,9 +165,9 @@ public class WB_Vector extends WB_Point {
 		WB_Vector t = (WB_Vector) o;
 
 		for (int i = 0; i < 3; i++) {
-			if (_coords[i] < t._coords[i]) {
+			if (coords[i] < t.coords[i]) {
 				return -1;
-			} else if (_coords[i] > t._coords[i]) {
+			} else if (coords[i] > t.coords[i]) {
 				return 1;
 			}
 		}
@@ -336,7 +187,13 @@ public class WB_Vector extends WB_Point {
 		raa.applySelfAsVector(this);
 	}
 
+	public void rotate(final double angle, final WB_Point p1, final WB_Point p2) {
+		final WB_Transform raa = new WB_Transform();
+		raa.addRotate(angle, p2.subToVector(p1));
+		raa.applySelfAsVector(this);
+	}
+
 	public WB_M33 tensor(WB_Point v) {
-		return WB_Coord.tensor(_coords, v._coords);
+		return WB_Coord.tensor(coords, v.coords);
 	}
 }
