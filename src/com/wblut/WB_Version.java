@@ -26,8 +26,7 @@ public class WB_Version {
 		return PATCH;
 	}
 
-	@Override
-	public String toString() {
+	public static String version() {
 		String ver = "W:Blut HE_Mesh " + MAJOR + "." + MINOR + "." + PATCH;
 		if (releaseInfo != null && releaseInfo.length() > 0) {
 			return ver + " " + releaseInfo;

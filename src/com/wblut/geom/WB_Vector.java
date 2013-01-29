@@ -196,4 +196,9 @@ public class WB_Vector extends WB_Point {
 	public WB_M33 tensor(WB_Point v) {
 		return WB_Coord.tensor(coords, v.coords);
 	}
+
+	public String toString() {
+		return new String("WB_Vector [" + coords[0] + ", " + coords[1] + ", "
+				+ coords[2] + "]");
+	}
 }

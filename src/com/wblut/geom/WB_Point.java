@@ -332,6 +332,11 @@ public class WB_Point implements Comparable {
 		raa.applySelfAsPoint(this);
 	}
 
+	public String toString() {
+		return new String("WB_Point [" + coords[0] + ", " + coords[1] + ", "
+				+ coords[2] + "]");
+	}
+
 	public static class WB_Comparator3d implements Comparator<WB_Point> {
 
 		public static int compare(double a, double b) {
