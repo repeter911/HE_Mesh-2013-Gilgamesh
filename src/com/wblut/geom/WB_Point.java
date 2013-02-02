@@ -332,6 +332,20 @@ public class WB_Point implements Comparable {
 		raa.applySelfAsPoint(this);
 	}
 
+	public int hashCode() {
+		// Algorithm from Effective Java by Joshua Bloch
+		int result = 17;
+		result = 37 * result + hashCode(coords[0]);
+		result = 37 * result + hashCode(coords[1]);
+		result = 37 * result + hashCode(coords[2]);
+		return result;
+	}
+
+	public static int hashCode(final double x) {
+		long f = Double.doubleToLongBits(x);
+		return (int) (f ^ (f >>> 32));
+	}
+
 	public String toString() {
 		return new String("WB_Point [" + coords[0] + ", " + coords[1] + ", "
 				+ coords[2] + "]");
